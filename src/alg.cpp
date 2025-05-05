@@ -1,27 +1,20 @@
 // Copyright 2021 NNTU-CS
 #include <stdexcept>
 
-struct SYM {
-  char ch;
-  int prior;
-};
-
 template<typename T>
 class TPQueue {
-private:
+ private:
   struct Node {
     T data;
     Node* next;
-    explicit Node(const T& data, Node* next = nullptr) 
+    explicit Node(const T& data, Node* next = nullptr)
       : data(data), next(next) {}
   };
-  
   Node* head;
   Node* tail;
 
-public:
+ public:
   TPQueue() : head(nullptr), tail(nullptr) {}
-  
   ~TPQueue() {
     while (head) {
       Node* temp = head;
@@ -42,13 +35,12 @@ public:
     
     Node* current = head;
     while (current->next && 
-           current->next->data.prior >= item.prior) {
+      current->next->data.prior >= item.prior) {
       current = current->next;
     }
     
     newNode->next = current->next;
     current->next = newNode;
-    
     if (!newNode->next) {
       tail = newNode;
     }
@@ -62,16 +54,13 @@ public:
     Node* temp = head;
     T data = head->data;
     head = head->next;
-    
     if (!head) {
       tail = nullptr;
-    }
-    
+    } 
     delete temp;
     return data;
   }
-
-  bool empty() const {
-    return head == nullptr;
-  }
+bool empty() const {
+  return head == nullptr;
+}
 };
