@@ -1,66 +1,75 @@
 // Copyright 2021 NNTU-CS
 #include <stdexcept>
 
+struct SYM {
+  char ch;
+  int prior;
+};
+
 template<typename T>
 class TPQueue {
- private:
+private:
   struct Node {
     T data;
     Node* next;
-    explicit Node(const T& data, Node* next = nullptr) : data(data), next(next) {}
+    Node(const T& data, Node* next = nullptr) : data(data), next(next) {}
   };
+  
   Node* head;
   Node* tail;
-  int size;
- public:
-  TPQueue() : head(nullptr), tail(nullptr), size(0) {}
+
+public:
+  TPQueue() : head(nullptr), tail(nullptr) {}
+  
   ~TPQueue() {
-    while (head != nullptr) {
+    while (head) {
       Node* temp = head;
       head = head->next;
       delete temp;
     }
   }
+
   void push(const T& item) {
     Node* newNode = new Node(item);
-    if (head == nullptr || item.prior > head->data.prior) {
+    
+    if (!head || item.prior > head->data.prior) {
       newNode->next = head;
       head = newNode;
-      if (tail == nullptr) {
-        tail = head;
-      }
-      size++;
+      if (!tail) tail = head;
       return;
     }
+    
     Node* current = head;
-    while (current->next != nullptr && current->next->data.prior >= item.prior) {
+    while (current->next && current->next->data.prior >= item.prior) {
       current = current->next;
     }
+    
     newNode->next = current->next;
     current->next = newNode;
-    if (newNode->next == nullptr) {
+    
+    if (!newNode->next) {
       tail = newNode;
     }
-    size++;
   }
+
   T pop() {
-    if (head == nullptr) {
+    if (!head) {
       throw std::runtime_error("Queue is empty");
     }
+    
     Node* temp = head;
     T data = head->data;
     head = head->next;
-    if (head == nullptr) {
+    
+    if (!head) {
       tail = nullptr;
     }
+    
     delete temp;
-    size--;
     return data;
   }
-  bool isEmpty() const {
+
+  bool empty() const {
     return head == nullptr;
-  }
-  int getSize() const {
-    return size;
   }
 };
