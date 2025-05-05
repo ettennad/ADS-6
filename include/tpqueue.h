@@ -9,7 +9,7 @@ class TPQueue {
     T data;
     Node* next;
     explicit Node(const T& value) : data(value), next(nullptr) {}
-  }; 
+}; 
   Node* head;
 
  public:
