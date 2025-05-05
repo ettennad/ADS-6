@@ -12,7 +12,8 @@ private:
   struct Node {
     T data;
     Node* next;
-    Node(const T& data, Node* next = nullptr) : data(data), next(next) {}
+    explicit Node(const T& data, Node* next = nullptr) 
+      : data(data), next(next) {}
   };
   
   Node* head;
@@ -40,7 +41,8 @@ public:
     }
     
     Node* current = head;
-    while (current->next && current->next->data.prior >= item.prior) {
+    while (current->next && 
+           current->next->data.prior >= item.prior) {
       current = current->next;
     }
     
