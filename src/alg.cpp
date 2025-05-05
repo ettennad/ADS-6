@@ -7,8 +7,8 @@ class TPQueue {
   struct Node {
     T data;
     Node* next;
-    explicit Node(const T& data, Node* next = nullptr)
-      : data(data), next(next) {}
+    explicit Node(const T& value, Node* next = nullptr)
+      : data(value), next(next) {}
   };
   Node* head;
   Node* tail;
@@ -23,49 +23,45 @@ class TPQueue {
     }
   }
 
-  void push(const T& item) {
-    Node* newNode = new Node(item);
-    
+  void push(const T& value) {
+    Node* newNode = new Node(value);
     if (!head || item.prior > head->data.prior) {
       newNode->next = head;
       head = newNode;
       if (!tail) tail = head;
       return;
     }
-    
-    Node* current = head;
-    while (current->next && 
-      current->next->data.prior >= item.prior) {
-      current = current->next;
-    }
-    
-    newNode->next = current->next;
-    current->next = newNode;
-    if (!newNode->next) {
-      tail = newNode;
-    }
+   Node* current = head;
+   while (current->next && 
+    current->next->data.prior >= value.prior) {
+    current = current->next;
+   }
+   newNode->next = current->next;
+   current->next = newNode;
+   if (!newNode->next) {
+    tail = newNode;
+   }
   }
 
-  T pop() {
-    if (!head) {
-      throw std::runtime_error("Queue is empty");
-    }
-    
-    Node* temp = head;
-    T data = head->data;
-    head = head->next;
-    if (!head) {
-      tail = nullptr;
-    } 
-    delete temp;
-    return data;
-  }
-bool empty() const {
-  return head == nullptr;
+T pop() {
+ if (!head) {
+  throw std::runtime_error("Queue is empty");
+ }
+ Node* temp = head;
+ T value = head->data;
+ head = head->next;
+ if (!head) {
+  tail = nullptr;
+ }
+ delete temp;
+ return value;
+}
+bool isEmpty() const {
+ return head == nullptr;
 }
 };
 
 struct SYM {
-  char ch;
-  int prior;
+char ch;
+int prior;
 };
