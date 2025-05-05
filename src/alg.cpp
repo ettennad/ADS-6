@@ -1,4 +1,6 @@
 // Copyright 2021 NNTU-CS
+#ifndef TPQUEUE_H
+#define TPQUEUE_H
 template<typename T>
 class TPQueue {
  private:
@@ -8,6 +10,7 @@ class TPQueue {
       explicit Node(const T& value) : data(value), next(nullptr) {}
   };
   Node* head;
+
  public:
   TPQueue() : head(nullptr) {}
   ~TPQueue() {
@@ -46,3 +49,7 @@ class TPQueue {
   }
 };
 struct SYM {
+    char ch;
+    int prior;
+};
+#endif // TPQUEUE_H
