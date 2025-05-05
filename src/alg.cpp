@@ -64,3 +64,8 @@ bool empty() const {
   return head == nullptr;
 }
 };
+
+struct SYM {
+  char ch;
+  int prior;
+};
