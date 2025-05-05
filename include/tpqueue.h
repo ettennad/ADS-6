@@ -9,13 +9,11 @@ class TPQueue {
     T data;
     Node* next;
     explicit Node(const T& value) : data(value), next(nullptr) {}
-  };
-  
+  }; 
   Node* head;
 
  public:
   TPQueue() : head(nullptr) {}
-  
   ~TPQueue() {
     while (head) {
       Node* temp = head;
@@ -26,18 +24,15 @@ class TPQueue {
 
   void push(const T& value) {
     Node* newNode = new Node(value);
-    
     if (!head || value.prior > head->data.prior) {
       newNode->next = head;
       head = newNode;
       return;
     }
-    
     Node* current = head;
     while (current->next && current->next->data.prior >= value.prior) {
       current = current->next;
-    }
-    
+    } 
     newNode->next = current->next;
     current->next = newNode;
   }
@@ -46,7 +41,6 @@ class TPQueue {
     if (!head) {
       throw "Queue is empty";
     }
-    
     Node* temp = head;
     T value = head->data;
     head = head->next;
